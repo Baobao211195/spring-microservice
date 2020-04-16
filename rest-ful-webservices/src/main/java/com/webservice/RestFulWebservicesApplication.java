@@ -1,12 +1,20 @@
 package com.webservice;
 
+import java.net.URI;
+
+import javax.validation.Valid;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.webservice.dto.UserDto;
 import com.webservice.exception.CustomException;
 
 @SpringBootApplication
@@ -30,6 +38,25 @@ public class RestFulWebservicesApplication {
 			throw new CustomException("Custom Exception");
 		}
 		return "Oanh";
+	}
+	
+	@RequestMapping(path = "/user/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public UserDto getById(@PathVariable Integer id) {
+		// call database
+		return new UserDto();
+	}
+	
+	@RequestMapping(path = "/user", method = RequestMethod.POST)
+	@ResponseBody
+	public URI save(@Valid @RequestBody UserDto object) {
+		// insert into database
+		Integer userId = 1;
+		URI location = ServletUriComponentsBuilder
+				.fromCurrentRequest()
+				.path("/{id}")
+				.buildAndExpand(userId).toUri();
+		return location;
 	}
 
 }
