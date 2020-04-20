@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.data.domain.Pageable;
 
-import com.webservice.dto.ListResults;
+import com.webservice.page.ListResults;
 
 public interface CustomerService {
 	

@@ -10,10 +10,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.webservice.dto.CustomPaginationPage;
-import com.webservice.dto.LinkJsonObject;
-import com.webservice.dto.ListResults;
-import com.webservice.dto.PaginatedResults;
+import com.webservice.page.CustomPaginationPage;
+import com.webservice.page.LinkJsonObject;
+import com.webservice.page.ListResults;
+import com.webservice.page.PaginatedResults;
 
 @SuppressWarnings("rawtypes")
 @Component

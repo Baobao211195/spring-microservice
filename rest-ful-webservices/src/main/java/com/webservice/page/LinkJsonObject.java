@@ -1,4 +1,4 @@
-package com.webservice.dto;
+package com.webservice.page;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;

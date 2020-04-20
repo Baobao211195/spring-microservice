@@ -1,4 +1,4 @@
-package com.webservice.dto;
+package com.webservice.page;
 
 import java.io.Serializable;
 import java.util.List;

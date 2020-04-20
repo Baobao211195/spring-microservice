@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.webservice.CustomerRepository;
 import com.webservice.domain.Customer;
-import com.webservice.dto.ListResults;
+import com.webservice.page.ListResults;
 
 import lombok.RequiredArgsConstructor;
 
