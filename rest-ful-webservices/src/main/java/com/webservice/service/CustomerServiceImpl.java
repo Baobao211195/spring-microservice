@@ -9,9 +9,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import com.webservice.CustomerRepository;
 import com.webservice.domain.Customer;
 import com.webservice.page.ListResults;
+import com.webservice.repository.CustomerRepository;
 
 import lombok.RequiredArgsConstructor;
 

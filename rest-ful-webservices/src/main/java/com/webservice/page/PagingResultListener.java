@@ -1,4 +1,4 @@
-package com.webservice;
+package com.webservice.page;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,11 +9,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import com.webservice.page.CustomPaginationPage;
-import com.webservice.page.LinkJsonObject;
-import com.webservice.page.ListResults;
-import com.webservice.page.PaginatedResults;
 
 @SuppressWarnings("rawtypes")
 @Component

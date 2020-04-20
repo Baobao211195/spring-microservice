@@ -1,4 +1,4 @@
-package com.webservice;
+package com.webservice.repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

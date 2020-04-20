@@ -1,6 +1,7 @@
 package com.webservice.controller;
 
 import java.net.URI;
+import java.util.Locale;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,9 +9,11 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,12 +21,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.webservice.CustomerRepository;
 import com.webservice.domain.Customer;
 import com.webservice.dto.UserDto;
 import com.webservice.exception.CustomException;
 import com.webservice.page.ListResults;
 import com.webservice.page.PaginatedResults;
+import com.webservice.repository.CustomerRepository;
 import com.webservice.service.CustomerService;
 
 @RestController
@@ -36,6 +39,9 @@ public class UserController {
 	
 	@Autowired
 	private ApplicationEventPublisher eventPublisher;
+	
+	@Autowired
+	private MessageSource messageSource;
 	
 	@RequestMapping(path = "/name", method = RequestMethod.GET)
 	@ResponseBody
@@ -52,23 +58,22 @@ public class UserController {
 		return "Oanh";
 	}
 	
+	@RequestMapping(path = "/locale", method = RequestMethod.GET)
+	@ResponseBody
+	public String getLocale(@RequestHeader(name="Accept-Language", required = false) Locale locale) {
+		return messageSource.getMessage("good.morning.message", null, locale);
+	}
+	
 	@RequestMapping(path = "/user/{id}", method = RequestMethod.GET)
 	@ResponseBody
-	public UserDto getById(@PathVariable Integer id) {
+	public Customer getById(@PathVariable Integer id) {
 		// call database
 		
 		Optional<Customer> custom =  repo.findById(id.longValue());
 		
-		custom.map(p -> {
-//			Resource
-//			Resource<Customer> cd = new Resource<Customer>(p);
-			
-			
-			return p;
-			
-		}).orElseThrow(() -> new CustomException("NOT FOUND"));
+		custom.orElseThrow(() -> new CustomException("NOT FOUND"));
 		
-		return new UserDto();
+		return custom.get();
 	}
 	
 	@SuppressWarnings("unchecked")
