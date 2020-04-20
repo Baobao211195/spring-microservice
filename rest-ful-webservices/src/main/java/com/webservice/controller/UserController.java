@@ -2,7 +2,6 @@ package com.webservice.controller;
 
 import java.net.URI;
 import java.util.Locale;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -66,14 +65,14 @@ public class UserController {
 	
 	@RequestMapping(path = "/user/{id}", method = RequestMethod.GET)
 	@ResponseBody
-	public Customer getById(@PathVariable Integer id) {
-		// call database
-		
-		Optional<Customer> custom =  repo.findById(id.longValue());
-		
-		custom.orElseThrow(() -> new CustomException("NOT FOUND"));
-		
-		return custom.get();
+	public UserDto getById(@PathVariable Integer id) {
+		return repo.findById(id.longValue()).map(p -> {
+			UserDto dto = new UserDto();
+			dto.setId(p.getId());
+			dto.setFirstName(p.getFistName());
+			dto.setLastName(p.getLastName());
+			return dto;
+		}).orElseThrow(() -> new CustomException("NOT FOUND"));
 	}
 	
 	@SuppressWarnings("unchecked")
