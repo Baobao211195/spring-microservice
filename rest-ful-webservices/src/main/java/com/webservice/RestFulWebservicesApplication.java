@@ -1,12 +1,16 @@
 package com.webservice;
 
 import java.net.URI;
+import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,10 +18,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.webservice.domain.Customer;
+import com.webservice.dto.ListResults;
+import com.webservice.dto.PaginatedResults;
 import com.webservice.dto.UserDto;
 import com.webservice.exception.CustomException;
+import com.webservice.service.CustomerService;
 
 @SpringBootApplication
 @RestController
@@ -26,9 +34,16 @@ public class RestFulWebservicesApplication {
 	@Autowired
 	private CustomerRepository repo;
 	
+	@Autowired
+	private CustomerService customerService;
+	
+	@Autowired
+	private ApplicationEventPublisher eventPublisher;
+	
 	public static void main(String[] args) {
 		SpringApplication.run(RestFulWebservicesApplication.class, args);
 	}
+	
 
 	@RequestMapping(path = "/name", method = RequestMethod.GET)
 	@ResponseBody
@@ -49,8 +64,39 @@ public class RestFulWebservicesApplication {
 	@ResponseBody
 	public UserDto getById(@PathVariable Integer id) {
 		// call database
+		
+		Optional<Customer> custom =  repo.findById(id.longValue());
+		
+		custom.map(p -> {
+//			Resource
+//			Resource<Customer> cd = new Resource<Customer>(p);
+			
+			
+			return p;
+			
+		}).orElseThrow(() -> new CustomException("NOT FOUND"));
+		
 		return new UserDto();
 	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(path = "/user", method = RequestMethod.GET)
+	@ResponseBody
+	public Object getAllCustomer(Pageable pageable, HttpServletRequest request) {
+		// call database
+		ListResults customer = customerService.getCustomer(pageable, request);
+		
+		UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(request.getRequestURL().toString());
+		uriBuilder.queryParam("page", pageable.getPageNumber());
+		uriBuilder.queryParam("size", pageable.getPageSize());
+		
+		PaginatedResults<Customer> event = new PaginatedResults<Customer>(Customer.class, uriBuilder, customer, pageable, customer.getTotalPages());
+		eventPublisher.publishEvent(event);
+		return event.getPage();
+		
+	}
+	
+	
 	
 	@RequestMapping(path = "/user", method = RequestMethod.POST)
 	@ResponseBody
