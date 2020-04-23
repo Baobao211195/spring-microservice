@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
+//github.com/phamvanoanh/spring-microservice.git
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,14 +16,13 @@ import com.webservice.service.CurrencyExchangeServiceProxy;
 
 import lombok.RequiredArgsConstructor;
 
+
 @RequiredArgsConstructor
 @RestController
 public class CurrencyConversionController {
 	
-	
 	private final RestTemplate restTemplate;
 	private final CurrencyExchangeServiceProxy crProxy;
-	
 	
 	@GetMapping("/currency-converter/from/{from}/to/{to}/quantity/{quantity}")
 	@ResponseBody

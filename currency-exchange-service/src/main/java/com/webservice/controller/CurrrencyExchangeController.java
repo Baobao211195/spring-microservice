@@ -35,7 +35,6 @@ public class CurrrencyExchangeController {
 					.port(Integer.parseInt(enviroment.getProperty("local.server.port"))).build(); 
 		}).orElseThrow(() ->new Exception("NOT FOUND DATA"));
 		
-				
 	}
 	
 	@GetMapping("/currency-converter-feign/from/{from}/to/{to}")
@@ -51,7 +50,5 @@ public class CurrrencyExchangeController {
 					.conversionMutiple(p.getConversionMutiple())
 					.port(Integer.parseInt(enviroment.getProperty("local.server.port"))).build(); 
 		}).orElseThrow(() ->new Exception("NOT FOUND DATA"));
-		
-				
 	}
 }
