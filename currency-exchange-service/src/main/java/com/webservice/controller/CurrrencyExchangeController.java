@@ -24,15 +24,13 @@ public class CurrrencyExchangeController {
 	@GetMapping("/currency-exchange/from/{from}/to/{to}")
 	@ResponseBody
 	public ExchangeValue retrieveExchangeValue(@PathVariable String from, @PathVariable String to) throws Exception {
-		
 		Optional<CurrencyExchange> exc = repo.findByFromAndTo(from, to);
-		
 		return exc.map(p -> {
 			return ExchangeValue.builder()
-					.id(p.getId())
-					.from(p.getFrom()).to(p.getTo())
-					.conversionMutiple(p.getConversionMutiple())
-					.port(Integer.parseInt(enviroment.getProperty("local.server.port"))).build(); 
+				.id(p.getId())
+				.from(p.getFrom()).to(p.getTo())
+				.conversionMutiple(p.getConversionMutiple())
+				.port(Integer.parseInt(enviroment.getProperty("local.server.port"))).build(); 
 		}).orElseThrow(() ->new Exception("NOT FOUND DATA"));
 		
 	}
@@ -40,15 +38,13 @@ public class CurrrencyExchangeController {
 	@GetMapping("/currency-converter-feign/from/{from}/to/{to}")
 	@ResponseBody
 	public ExchangeValue retrieveExchangeValueFeign(@PathVariable String from, @PathVariable String to) throws Exception {
-		
 		Optional<CurrencyExchange> exc = repo.findByFromAndTo(from, to);
-		
 		return exc.map(p -> {
 			return ExchangeValue.builder()
-					.id(p.getId())
-					.from(p.getFrom()).to(p.getTo())
-					.conversionMutiple(p.getConversionMutiple())
-					.port(Integer.parseInt(enviroment.getProperty("local.server.port"))).build(); 
+				.id(p.getId())
+				.from(p.getFrom()).to(p.getTo())
+				.conversionMutiple(p.getConversionMutiple())
+				.port(Integer.parseInt(enviroment.getProperty("local.server.port"))).build(); 
 		}).orElseThrow(() ->new Exception("NOT FOUND DATA"));
 	}
 }
