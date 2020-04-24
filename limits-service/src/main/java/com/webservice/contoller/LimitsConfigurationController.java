@@ -2,8 +2,6 @@ package com.webservice.contoller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,7 +17,6 @@ import lombok.NoArgsConstructor;
 public class LimitsConfigurationController {
 	
 	@Autowired private LimitsConfiguration cofig;
-	
 	@RequestMapping(path = "/limits", method = RequestMethod.GET)
 	@ResponseBody
 	public Config retrieveLimitsFromConfiguration() {
