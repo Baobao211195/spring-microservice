@@ -15,8 +15,10 @@ import org.springframework.web.client.RestTemplate;
 import com.webservice.service.CurrencyExchangeServiceProxy;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 
+@Log4j2
 @RequiredArgsConstructor
 @RestController
 public class CurrencyConversionController {
@@ -50,6 +52,7 @@ public class CurrencyConversionController {
 			 @PathVariable String to) {
 		
 		Object cvbF = crProxy.convertCurrency(from, to);
+		log.info("response {}", cvbF);
 		return cvbF;
 		
 	}
