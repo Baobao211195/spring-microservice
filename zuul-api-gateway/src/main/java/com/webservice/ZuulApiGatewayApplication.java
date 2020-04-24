@@ -16,6 +16,8 @@ public class ZuulApiGatewayApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ZuulApiGatewayApplication.class, args);
 	}
+	
+	// http://localhost:15672/#/ for rabbitmq
 	@Bean
 	public Sampler defaultSampler () {
 		return Sampler.ALWAYS_SAMPLE; 
